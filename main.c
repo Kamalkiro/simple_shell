@@ -7,7 +7,8 @@
  * @env: instead of **environ
  * Return: 0 on success:
 */
-void singinthandl(int s){
+void singinthandl(int s)
+{
 	char *dir = malloc(MAXSIZE);
 	int dirsize = MAXSIZE;
 
@@ -21,20 +22,35 @@ void singinthandl(int s){
 		free(dir);
 	}
 }
-int main(int ac, char **av __attribute__((unused)))
+int main(int ac, char **av)
 {
-	size_t linesize; 
 	unsigned int dirsize;
-	char *line, *dir;
-	int pid = 0, count, i = 0, status, e, ec = 0, characters, check;
+	char *line = NULL, *dir, *vari, **commands = NULL;
+	int pid = 0, count, i = 0, status, e, ec = 0, characters;
+	int check, linesize, ppid = 0, x = 0, fd, stepout = 0, flag = 0;
 	
 	(void) ac;
 	dirsize = MAXSIZE;
-
+	ppid = getpid();
+	vari = itoa(ppid);
+	_setenv("$", vari, 1);
+	free(vari);
+	if (av[1])
+	{
+		fd = open(av[1], O_RDONLY);
+		line = _calloc(MAXSIZE * 8);
+		check = read(fd, line, MAXSIZE * 8);
+		if (check)
+			commands = handlechain(line);
+		stepout++;
+		free(line);
+	}
 	while(1)
 	{
+		if (stepout && !commands)
+			break;
 parent:
-		if (isatty(0))
+		if (isatty(0) && !commands)
 		{
 			dir = malloc(sizeof(char *) * MAXSIZE);
 			getcwd(dir, dirsize);
@@ -43,18 +59,52 @@ parent:
 			_puts("$ ");
 		}
 		signal(SIGINT, singinthandl);
-		characters = getline(&line, &linesize, stdin);
+		if (!commands)
+		{
+			characters = _getline(&line, &linesize, 0);
+		}
 		if (characters == -1)
 		{
 			if (isatty(0))
 				_puts("\n");
 			break;
 		}
+		if (!commands)
+			commands = handlechain(line);
+		if (commands)
+		{
+			if (commands[x])
+			{
+				line = _calloc(_strlen(commands[x]) + 1);
+				_strcpy(line, commands[x], MAXSIZE);
+				x++;
+			}
+			if (!commands[x])
+			{
+				x = 0;
+				freedouble(commands);
+				commands = NULL;
+			}
+		}
+		if (handleor(line) != 0)
+		{
+			flag = handleor(line);
+			if ((e == 3 && flag == 1) || (flag == 2 && e != 3))
+			{
+				continue;
+			}
+			line = _strtok(line, "|&");
+		}
 		spacemv(line);
+		if (_strchr(line, '$') > 0)
+		{
+			line = convertvar(line);
+		}
 		count = argcount(line);
 		check = checkifcommandexists(line);
 		if (check == 0)
 		{
+			e = 3;
 			if(!isatty(0))
 			{
 				_perror(av[0], av[1] ? av[1] : "Not found");
@@ -68,6 +118,8 @@ parent:
 		}
 		else
 		{
+			if (check == 2)
+				count += 1000;
 			pid = fork();
 			if (pid == 0)
 			{
@@ -78,6 +130,9 @@ parent:
 			{
 				wait(&status);
 				e = (status >> 8) & 0xFF;
+				vari = itoa(e);
+				_setenv("?", vari, 1);
+				free(vari);
 				if (e == 110)
 					deletvaratparent(line);
 				if (e == 111)
@@ -93,6 +148,11 @@ parent:
 				}
 			}
 		}
+	}
+	if (line)
+	{
+		free(line);
+		line = NULL;
 	}
 	exit(ec ? ec : 0);
 }

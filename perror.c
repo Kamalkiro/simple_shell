@@ -7,14 +7,11 @@
 */
 void _perror(char *argf, char *args)
 {
-	int i = 0;
-
 	while (*argf != '\0')
 	{
 		write(2, argf, 1);
 		argf++;
 	}
-	i = 0;
 	write(2, ": ", 2);
 	while (*args)
 	{

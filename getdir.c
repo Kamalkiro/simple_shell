@@ -9,7 +9,7 @@
 int getdir(char **arguments __attribute__((unused)))
 {
     size_t size = MAXSIZE;
-    char *dir = malloc(MAXSIZE);
+    char *dir = _calloc(MAXSIZE);
 
     getcwd(dir, size);
     _puts(dir);

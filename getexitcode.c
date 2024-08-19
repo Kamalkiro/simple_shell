@@ -8,7 +8,7 @@
 int getexitcode(char *line)
 {
 	int i = 0, j = 0, ret = 0;
-	char *code = malloc(sizeof(char) * _strlen(line));
+	char *code = _calloc(sizeof(char) * _strlen(line));
 	
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;

@@ -9,14 +9,15 @@
 char *prepareforexec(char *command)
 {
 	char *pathenv = _getenv("PATH");
-	char *paths = malloc(MAXSIZE);
+	char *paths = _calloc(MAXSIZE * 8), *ppath, *tmp;
 	int i = 0;
 	
-	
-	_strcpy(paths, pathenv, MAXSIZE);
-	char *ppath = strtok(paths, ":"), *tmp = malloc(MAXSIZE);
-
-	while (ppath)
+	_strcpy(paths, pathenv, MAXSIZE * 8);
+	ppath = _strtok(paths, ":");
+	tmp = _calloc(120);
+	if(access(command, F_OK) == 0)
+		return (command);
+	while (*ppath)
 	{
 		tmp = _strconcat(ppath, "/", 1);
 		tmp = _strconcat(tmp, command, 30);
@@ -27,7 +28,7 @@ char *prepareforexec(char *command)
 				return(tmp);
 			}
 		i--;
-		ppath = (strtok(NULL, ":"));
+		ppath = (_strtok(NULL, ":"));
 	}
 	return(NULL);
 }

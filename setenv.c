@@ -9,10 +9,10 @@
 */
 int _setenv(char *var, char *value, int signal)
 {
-	char *envar = malloc(MAXSIZE);
+	char *envar = _calloc(MAXSIZE);
 	char *modifvar;
 	int i = 0, len = _strlen(var);
-	if (!var || !value || signal > 1 || signal < 0)
+	if (!*var || !*value || signal > 1 || signal < 0)
 		return 1;
 	while (environ[i])
 	{
@@ -21,11 +21,12 @@ int _setenv(char *var, char *value, int signal)
 		{
 			if (signal == 1)
 			{
-				modifvar = malloc(_strlen(var) + 1 + _strlen(value) + 1);
-				modifvar = _strconcat(modifvar, var, _strlen(var));
+				modifvar = _calloc(_strlen(var) + 1 + _strlen(value) + 1);
+				modifvar = _strcpy(modifvar, var, _strlen(var));
 				modifvar = _strconcat(modifvar, "=", 1);
 				modifvar = _strconcat(modifvar, value, _strlen(value));
 				environ[i] = modifvar;
+				free(envar);
 				return 0;
 			}
 			else
@@ -33,8 +34,8 @@ int _setenv(char *var, char *value, int signal)
 		}
 		i++;
 	}
-	modifvar = malloc(_strlen(var) + 1 + _strlen(value) + 1);
-	modifvar = _strconcat(modifvar, var, _strlen(var));
+	modifvar = _calloc(_strlen(var) + 1 + _strlen(value) + 1);
+	modifvar = _strcpy(modifvar, var, _strlen(var));
 	modifvar = _strconcat(modifvar, "=", 1);
 	modifvar = _strconcat(modifvar, value, _strlen(value));
 	environ[i] = modifvar;

@@ -7,7 +7,7 @@
 */
 int deletvar(char **arguments)
 {
-	char *envar = malloc(MAXSIZE);
+	char *envar = _calloc(MAXSIZE);
 	int i = 0, j = 1, len;
 	while (arguments[j])
 	{
@@ -25,21 +25,21 @@ int deletvar(char **arguments)
 		}
 		j++;
 	}
-	return -1;
+	return 3;
 }
 void deletvaratparent(char *line)
 {
-	char *var = malloc(MAXSIZE), *envar, *cline = malloc(MAXSIZE);
+	char *var = _calloc(MAXSIZE), *envar, *cline = _calloc(MAXSIZE);
 	char **vars = NULL;
 	int i = 0, len, j = 1;
 
 	vars = malloc(MAXSIZE * sizeof(char *));
 	_strcpy(cline, line, _strlen(line));
-	var = strtok(cline," \t");
-	while(var)
+	var = _strtok(cline," \t");
+	while(*var)
 	{
 		vars[i] = var;
-		var = strtok(NULL, " \t");
+		var = _strtok(NULL, " \t");
 		i++;
 	}
 	vars[i] = NULL;
@@ -49,7 +49,7 @@ void deletvaratparent(char *line)
 		len = _strlen(vars[j]);
 		while (environ[i] != NULL)
 		{
-			envar = malloc(len);
+			envar = _calloc(len);
 			_strcpy(envar, environ[i], len);
 			if (_strcmp(envar, vars[j]) == 0)
 			{

@@ -12,12 +12,12 @@ char *_getenv(char *var)
 
 	while(environ[i])
 	{
-		env_one = malloc(MAXSIZE);
-		_strcpy(env_one, env[i], MAXSIZE);
-		tmp = strtok(env_one, "=");
+		env_one = _calloc(MAXSIZE * 8);
+		_strcpy(env_one, env[i], MAXSIZE * 8);
+		tmp = _strtok(env_one, "=");
 		if (_strcmp(tmp, var) == 0)
 		{
-			tmp = strtok(NULL, "\0");
+			tmp = _strtok(NULL, "\0");
 			return(tmp);
 		}
 		free(env_one);

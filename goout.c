@@ -36,4 +36,5 @@ int goout(char **arguments)
 	}
 	else
 		return (112);
+	return 3;
 }

@@ -3,21 +3,21 @@
 /**
  * checkifcommandexists - check if command exists or not
  * @line: input from stdin
- * Return: 1 if exists, 0 if not
+ * Return: 2 if alias 1 if exists, 0 if not
 */
 int checkifcommandexists(char *line)
 {
-	int i = 0, j = 0;
-	char *command = malloc(MAXSIZE), *checkexec;
+	int i = 0, j = 0, ret = 0;
+	char *command = _calloc(MAXSIZE), *checkexec = NULL, *check = NULL, *cmd;
 	choice builtins[] = {
-        	{"cd", changedirectory},
-        	{"exit", goout},
-        	{"pwd", getdir},
-        	{"setenv", setvar},
-        	{"unset", deletvar},
-        	{"alias", setals},
-        	{"unalias", deletals},
-        	{NULL, notbuilt},
+		{"cd", changedirectory},
+		{"exit", goout},
+		{"pwd", getdir},
+		{"setenv", setvar},
+		{"unset", deletvar},
+		{"alias", setals},
+		{"unalias", deletals},
+		{NULL, notbuilt},
 	};
 
 	while (line[i] == ' ' || line[i] == '\t')
@@ -29,21 +29,34 @@ int checkifcommandexists(char *line)
 		j++;
 	}
 	command[j] = '\0';
+	cmd = _calloc(_strlen(command) + 1);
+
+	_strcpy(cmd, command, _strlen(command));
+	cmd[_strlen(command)] = '\0';
+	free(command);
+	check = checkals(cmd);
+	if (check)
+	{
+		free(cmd);
+		cmd = check;
+		check = checkals(cmd);
+		if (check)
+			cmd = check;
+		ret = 1;
+	}
+	cmd = _strtok(cmd, " \'");
 	i = 0;
 	while (builtins[i].choix)
 	{
-        	j = _strcmp(command, builtins[i].choix);
-        	if (j == 0)
-        	{
-			free(command);
-			return (1);
-        	}
+		j = _strcmp(cmd, builtins[i].choix);
+		if (j == 0)
+			return (ret + 1);
 		i++;
 	}
-	checkexec = prepareforexec(command);
-	free(command);
+	checkexec = prepareforexec(cmd);
 	if (checkexec != NULL)
-		return (1);
+		ret += 1;
 	else
-		return (0);
+		ret = 0;
+	return (ret);
 }

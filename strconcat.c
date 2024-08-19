@@ -12,9 +12,9 @@ char *_strconcat(char *first, char *second, int n)
 	char *tmp = first, *ret;
 
 	if (n > _strlen(second))
-		ret = malloc(_strlen(first) + _strlen(second) + 1);
+		ret = _calloc(_strlen(first) + _strlen(second) + 1);
 	else
-		ret = malloc(_strlen(first) + n + 1);
+		ret = _calloc(_strlen(first) + n + 1);
 	if (!first || !second || n == 0)
 		return (NULL);
 	_strcpy(ret, first, _strlen(first));

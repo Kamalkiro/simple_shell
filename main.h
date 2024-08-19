@@ -27,6 +27,7 @@ typedef struct choices
 	int (*fp)(char **array);
 } choice;
 
+int _strchr(char *str, char chr);
 char *_strcpy(char *first, char *second, int n);
 int _strlen(char *s);
 char *_strconcat(char *first, char *second, int n);
@@ -43,8 +44,14 @@ int _setenv(char *var, char *value, int signal);
 int getexitcode(char *line);
 int checkifcommandexists(char *line);
 void _perror(char *argf, char *args);
+int _getline(char **buffer, int *buffersize, int fd);
+char *_strtok(char *line, char *delim);
+void spacesback(char **args);
+char *_calloc(int size);
+int handleor(char *line);
 
 extern char **environ;
+extern char *str_ptr;
 
 int changedirectory(char **arguments);
 int goout(char **arguments);
@@ -58,5 +65,9 @@ void changeiffromparent(char *line);
 char *goback(char *current);
 void setvaratparent(char *line, int count);
 void deletvaratparent(char *line);
-
+char *checkals(char *als);
+void addquotes(char *arg);
+char *itoa(int num);
+char *convertvar(char *line);
+char **handlechain(char *line);
 #endif

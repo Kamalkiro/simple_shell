@@ -1,0 +1,5 @@
+tb3=ls
+wri='cat'
+t=tb3
+l='ls'
+key='exit'
