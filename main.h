@@ -49,9 +49,12 @@ char *_strtok(char *line, char *delim);
 void spacesback(char **args);
 char *_calloc(int size);
 int handleor(char *line);
+void singinthandl(int s);
 
 extern char **environ;
 extern char *str_ptr;
+extern char *to_free[MAXSIZE * 80];
+extern int to;
 
 int changedirectory(char **arguments);
 int goout(char **arguments);
@@ -63,7 +66,7 @@ int deletals(char **arguments);
 int notbuilt(char **arguments __attribute__((unused)));
 void changeiffromparent(char *line);
 char *goback(char *current);
-void setvaratparent(char *line, int count);
+void setvaratparent(char *line);
 void deletvaratparent(char *line);
 char *checkals(char *als);
 void addquotes(char *arg);

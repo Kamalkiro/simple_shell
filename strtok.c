@@ -64,5 +64,5 @@ char *_strtok(char *line, char *delim)
 		str_ptr++;
 		skip++;
 	}
-	return(ret);
+	return (ret);
 }

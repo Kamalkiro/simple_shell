@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * _perror: same as normal perror but the syntax follows alx rules
+ * _perror - same as normal perror but the syntax follows alx rules
  * @argf: first argument
  * @args: second argument
 */

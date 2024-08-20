@@ -35,5 +35,6 @@ int changedirectory(char **arguments)
 		perror("cd");
 		return (3);
 	}
+	free(parent);
 	return (113);
 }

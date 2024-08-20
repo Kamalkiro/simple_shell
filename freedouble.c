@@ -8,12 +8,11 @@ void freedouble(char **db)
 {
 	int i = 0;
 
-	if(!db)
+	if (!db)
 		return;
 	while (db[i])
 	{
 		free(db[i]);
 		i++;
 	}
-	free(db);
 }

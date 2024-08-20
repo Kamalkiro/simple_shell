@@ -2,7 +2,8 @@
 /**
  * childprocess - starts a process after getting a command
  * @command: command to process with arguments
- * Return : exit status
+ * @count: number of arguments
+ * Return: exit status
 */
 int childprocess(char *command, int count)
 {
@@ -11,16 +12,16 @@ int childprocess(char *command, int count)
 	int i = 0, j = 0, flag = 0;
 	int (*fp)(char **);
 
-	if(*command == '\n' || count == 0)
-		return 0;
+	if (*command == '\n' || count == 0)
+		return (0);
 	if (count > 1000)
 	{
 		count -= 1000;
 		flag++;
 	}
-    	args = malloc(sizeof(char *) * count);
-	narg = _strtok(command," \t");
-	while(*narg)
+	args = malloc(sizeof(char *) * count);
+	narg = _strtok(command, " \t");
+	while (*narg)
 	{
 		args[i] = _calloc(120);
 		args[i] = narg;
@@ -45,7 +46,7 @@ int childprocess(char *command, int count)
 		{
 			args[i] = args[i - 1];
 			i--;
-		}	
+		}
 		args[0] = _strtok(args[0], " ");
 		args[1] = _strtok(NULL, " ");
 	}
@@ -62,6 +63,6 @@ int childprocess(char *command, int count)
 			perror("at execve");
 		}
 	}
-	i = 0;
+	free(args);
 	return (j);
 }

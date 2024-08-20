@@ -7,26 +7,26 @@
 */
 int (*structchoice(char *command))(char **)
 {
-    choice builtins[] = {
-        {"cd", changedirectory},
-        {"exit", goout},
-        {"pwd", getdir},
-        {"setenv", setvar},
-        {"unset", deletvar},
-        {"alias", setals},
-        {"unalias", deletals},
-        {NULL, notbuilt},
-    };
-    int i = 0, j = 0;
-    
-    while (builtins[i].choix)
-    {
-        j = _strcmp(command, builtins[i].choix);
-        if (j == 0)
-        {
-            return(builtins[i].fp);
-        }
-        i++;
-    }
-    return (builtins[i].fp);
+	choice builtins[] = {
+		{"cd", changedirectory},
+		{"exit", goout},
+		{"pwd", getdir},
+		{"setenv", setvar},
+		{"unset", deletvar},
+		{"alias", setals},
+		{"unalias", deletals},
+		{NULL, notbuilt},
+	};
+	int i = 0, j = 0;
+
+	while (builtins[i].choix)
+	{
+		j = _strcmp(command, builtins[i].choix);
+		if (j == 0)
+		{
+			return (builtins[i].fp);
+		}
+		i++;
+	}
+	return (builtins[i].fp);
 }

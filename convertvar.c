@@ -3,6 +3,7 @@
 /**
  * convertvar - converts the name of a variable into its value
  * @line: input
+ * Return: line after converting variable into its value
 */
 char *convertvar(char *line)
 {
@@ -15,7 +16,7 @@ char *convertvar(char *line)
 	x = i;
 	i++;
 	name = _calloc(_strlen(line) - i);
-	while(line[i] != ' ' && line[i])
+	while (line[i] != ' ' && line[i])
 	{
 		name[j] = line[i];
 		i++;
@@ -25,10 +26,9 @@ char *convertvar(char *line)
 	value = _getenv(name);
 	if (!value)
 		return (line);
-	free(name);
 	j = 0;
 	if (line[i] != '\0')
-	{	
+	{
 		if (_strlen(line) - i > 1)
 		{
 			cont = _calloc(_strlen(line) - i + 1);
@@ -41,7 +41,7 @@ char *convertvar(char *line)
 			cont[j] = '\0';
 		}
 	}
-	while(line[x])
+	while (line[x])
 	{
 		line[x] = '\0';
 		x++;
@@ -57,5 +57,5 @@ char *convertvar(char *line)
 	if (cont)
 		modif = _strconcat(modif, cont, _strlen(cont));
 	line = modif;
-	return(line);
+	return (line);
 }

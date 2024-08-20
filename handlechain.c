@@ -3,7 +3,7 @@
 /**
  * handlechain - handles chained commands
  * @line: chain of commands
- * RETURN: 
+ * Return: array of commands
 */
 char **handlechain(char *line)
 {
@@ -23,20 +23,16 @@ char **handlechain(char *line)
 	}
 	j = _strchr(line, ';');
 	if (j > 0)
-	{
 		commands = malloc(sizeof(char *) * (j + 2));
-	}
 	else
 		return (NULL);
 	j = 0;
-	i = 0;
 	while (line[j])
 	{
 		i = 0;
 		command = _calloc(_strlen(line));
 		while (line[j] != ';' && line[j])
 		{
-			
 			command[i] = line[j];
 			j++;
 			i++;
@@ -47,8 +43,7 @@ char **handlechain(char *line)
 		a++;
 		if (line[j])
 			j++;
-		free(command);
 	}
 	commands[a] = NULL;
-	return(commands);
+	return (commands);
 }

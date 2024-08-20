@@ -13,7 +13,7 @@ int _getline(char **buffer, int *buffersize, int fd)
 	ssize_t size = read(fd, line, MAXSIZE);
 
 	if (size == 0)
-		return -1;
+		return (-1);
 	line[size - 1] = '\0';
 	*buffer = line;
 	*buffersize = size;

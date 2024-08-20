@@ -7,25 +7,25 @@
 */
 int setals(char **arguments)
 {
-        int fd, size, count = 0, i = 0, check = 0;
-        char *aliases, *cheker, *modif, **modifier = malloc(sizeof(char *));
+	int fd, size, count = 0, i = 0, check = 0;
+	char *aliases, *cheker, *modif, **modifier = malloc(sizeof(char *));
 
-        fd = open(".aliases", O_CREAT | O_RDWR | O_APPEND,0666);
-	while(arguments[i])
+	fd = open(".aliases", O_CREAT | O_RDWR | O_APPEND, 0666);
+	while (arguments[i])
 	{
 		i++;
 	}
 	i--;
-        if (arguments[1])
-        {
+	if (arguments[1])
+	{
 		while (i > 0)
-                {
+		{
 			count = 0;
 			check = 0;
-			while(arguments[i][count])
+			while (arguments[i][count])
 			{
 				if (arguments[i][count] == '=')
-				{	
+				{
 					check++;
 				}
 				count++;
@@ -36,10 +36,10 @@ int setals(char **arguments)
 				if (!cheker)
 				{
 					_perror("at alias", " non valid entry");
-					return 3;
+					return (3);
 				}
 				else
-				{	
+				{
 					_puts("alias ");
 					_puts(arguments[i]);
 					_puts("=");
@@ -58,24 +58,21 @@ int setals(char **arguments)
 				modifier[2] = NULL;
 				_strcpy(modif, arguments[i], MAXSIZE);
 				deletals(modifier);
-				free(modif);
 				addquotes(arguments[i]);
-				write (fd, arguments[i], _strlen(arguments[i]));
-				write (fd, "\n", 1);
+				write(fd, arguments[i], _strlen(arguments[i]));
+				write(fd, "\n", 1);
 				i--;
 			}
 		}
-        }
-        else
-        {
+	}
+	else
+	{
 		aliases = _calloc(MAXSIZE);
-                size = read(fd, aliases, MAXSIZE);
-
+		size = read(fd, aliases, MAXSIZE);
 		aliases[size] = '\0';
-                _puts(aliases);
-                free(aliases);
-        }
+		_puts(aliases);
+	}
 	free(modifier);
-        close(fd);
-        return 108;
+	close(fd);
+	return (108);
 }

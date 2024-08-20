@@ -8,12 +8,11 @@
 
 int getdir(char **arguments __attribute__((unused)))
 {
-    size_t size = MAXSIZE;
-    char *dir = _calloc(MAXSIZE);
+	size_t size = MAXSIZE;
+	char *dir = _calloc(MAXSIZE);
 
-    getcwd(dir, size);
-    _puts(dir);
-    _puts("\n");
-    free(dir);
-    return 1;
+	getcwd(dir, size);
+	_puts(dir);
+	_puts("\n");
+	return (1);
 }

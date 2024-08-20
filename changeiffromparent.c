@@ -40,10 +40,9 @@ void changeiffromparent(char *line)
 	if (!*dir)
 		dir = home;
 	if (dir == lami)
-	{
 		dir = goback(parent);
-	}
 	_setenv("OLDPWD", parent, 1);
 	if (chdir(dir) == -1)
 		perror("cd");
+	free(parent);
 }

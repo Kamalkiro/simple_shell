@@ -8,31 +8,21 @@
 
 int setvar(char **arguments)
 {
-        int check = 1;
+	int check = 1;
 
-        while (arguments[check])
-        {
-                check++;
-        }
-        if (check == 3)
-        {
-                _setenv(arguments[1], arguments[2], 1);
-		return 111;
-        }
-        else
-        {
+	while (arguments[check])
+	{
+		check++;
+	}
+	if (check == 3)
+	{
+		_setenv(arguments[1], arguments[2], 1);
+		return (111);
+	}
+	else
+	{
 		perror("Usage : setenv key value");
-		return 3;
-        }
-        return 3;
-}
-void setvaratparent(char *line, int count)
-{
-        char *key, *value;
-
-        (void) count;
-        key = _strtok(line, " ");
-	key = _strtok(NULL, " ");
-        value = _strtok(NULL, " ");
-        _setenv(key, value, 1);
+		return (3);
+	}
+	return (3);
 }

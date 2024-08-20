@@ -33,11 +33,9 @@ int checkifcommandexists(char *line)
 
 	_strcpy(cmd, command, _strlen(command));
 	cmd[_strlen(command)] = '\0';
-	free(command);
 	check = checkals(cmd);
 	if (check)
 	{
-		free(cmd);
 		cmd = check;
 		check = checkals(cmd);
 		if (check)

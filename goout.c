@@ -3,15 +3,16 @@
 /**
  * goout - exits the shell
  * @arguments: Unused parameter added to handle the function pointer
- * Return : status 112 to exit.
+ * Return: status 112 to exit.
   */
 
 int goout(char **arguments)
 {
 	int i = 0, ret = 0;
+
 	if (arguments[1])
 	{
-		while(arguments[1][i] && arguments[1][i] > 47 && arguments[1][i] < 58)
+		while (arguments[1][i] && arguments[1][i] > 47 && arguments[1][i] < 58)
 		{
 			ret = (ret * 10) + (arguments[1][i] - 48);
 			i++;
@@ -32,9 +33,8 @@ int goout(char **arguments)
 				return (114);
 			}
 		}
-		
 	}
 	else
 		return (112);
-	return 3;
+	return (3);
 }

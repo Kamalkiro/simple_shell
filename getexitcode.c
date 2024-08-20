@@ -9,7 +9,7 @@ int getexitcode(char *line)
 {
 	int i = 0, j = 0, ret = 0;
 	char *code = _calloc(sizeof(char) * _strlen(line));
-	
+
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	while (line[i] != ' ' && line[i] != '\t' && line[i])

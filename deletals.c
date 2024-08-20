@@ -18,7 +18,7 @@ int deletals(char **arguments)
 		_strcpy(key, arguments[i], strlen(arguments[i]));
 		_strtok(key, "=");
 		j = 0;
-		while(line && j < _strlen(line))
+		while (line && j < _strlen(line))
 		{
 			each = _calloc(_strlen(line));
 			x = 0;
@@ -33,7 +33,7 @@ int deletals(char **arguments)
 			{
 				y--;
 				j -= x;
-				while(line[j] != '\n')
+				while (line[j] != '\n')
 				{
 					z = j;
 					while (line[z])
@@ -42,7 +42,7 @@ int deletals(char **arguments)
 						z++;
 					}
 				}
-				while(line[j])
+				while (line[j])
 				{
 					line[j] = line[j + 1];
 					j++;
@@ -52,14 +52,11 @@ int deletals(char **arguments)
 			while (line[j] != '\n' && line[j])
 				j++;
 			j++;
-			free(each);
 		}
-		free(key);
 		i++;
 	}
 	fd = open(".aliases", O_WRONLY | O_TRUNC);
 	write(fd, line, _strlen(line));
-	free(line);
 	close(fd);
 	return (y == 1 ? 3 : 0);
 }

@@ -9,7 +9,7 @@
 */
 char *_strconcat(char *first, char *second, int n)
 {
-	char *tmp = first, *ret;
+	char *tmp = NULL, *ret;
 
 	if (n > _strlen(second))
 		ret = _calloc(_strlen(first) + _strlen(second) + 1);

@@ -21,14 +21,10 @@ char *checkals(char *als)
 		{
 			i++;
 			each = _strtok(NULL, "\'\n");
-			free(alx);
-			/* free line */
 			return (each);
 		}
 		each = _strtok(NULL, "\n");
 		each = _strtok(NULL, "=");
 	}
-	free(alx);
-	free(line);
 	return (NULL);
 }
