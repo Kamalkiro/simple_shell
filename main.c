@@ -16,7 +16,6 @@ int main(int ac, char **av)
 	int check, linesize, ppid = 0, x = 0, fd, stepout = 0, flag = 0;
 
 	(void) ac;
-	replace_environ();
 	dirsize = MAXSIZE;
 	ppid = getpid();
 	vari = itoa(ppid);
@@ -147,7 +146,5 @@ int main(int ac, char **av)
 			free(line);
 		}
 	}
-	freedouble(environ);
-	free(environ);
 	exit(ec ? ec : 0);
 }
