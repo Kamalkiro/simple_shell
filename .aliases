@@ -1,5 +1,6 @@
 tb3=ls
 t=tb3
-l='ls'
 key='exit'
 ktb='echo'
+show='cat'
+kamal='kiro'

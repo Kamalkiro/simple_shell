@@ -15,6 +15,7 @@ int (*structchoice(char *command))(char **)
 		{"unset", deletvar},
 		{"alias", setals},
 		{"unalias", deletals},
+		{"env", my_env},
 		{NULL, notbuilt},
 	};
 	int i = 0, j = 0;

@@ -9,31 +9,40 @@
 */
 int _setenv(char *var, char *value, int signal)
 {
-	char *envar = _calloc(MAXSIZE);
-	char *modifvar;
+	char *envar = NULL;
+	char *modifvar, *hold;
 	int i = 0, len = _strlen(var);
 
 	if (!*var || !*value || signal > 1 || signal < 0)
 		return (1);
 	while (environ[i])
 	{
+		envar = _calloc(len + 1);
 		_strcpy(envar, environ[i], len);
 		if (_strcmp(envar, var) == 0)
 		{
+			free(envar);
 			if (signal == 1)
 			{
 				modifvar = _strconcat(var, "=", _strlen(var) + 1);
+				hold = modifvar;
 				modifvar = _strconcat(modifvar, value, _strlen(value));
+				free(hold);
+				free(environ[i]);
 				environ[i] = modifvar;
 				return (0);
 			}
 			else
 				return (1);
 		}
+		free(envar);
 		i++;
 	}
 	modifvar = _strconcat(var, "=", _strlen(var) + 1);
+	hold = modifvar;
 	modifvar = _strconcat(modifvar, value, _strlen(value));
+	free(hold);
+	free(environ[i]);
 	environ[i] = modifvar;
 	environ[i + 1] = NULL;
 	return (0);

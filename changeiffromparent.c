@@ -6,7 +6,7 @@
 */
 void changeiffromparent(char *line)
 {
-	char *dir = _calloc(sizeof(char) * _strlen(line));
+	char *dir = _calloc(sizeof(char) * _strlen(line)), *tmp = dir;
 	char *home = _getenv("HOME");
 	int i = 0, j = 0;
 	char *oldpwd = _getenv("OLDPWD");
@@ -45,4 +45,7 @@ void changeiffromparent(char *line)
 	if (chdir(dir) == -1)
 		perror("cd");
 	free(parent);
+	free(oldpwd);
+	free(home);
+	free(tmp);
 }

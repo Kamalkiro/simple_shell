@@ -9,7 +9,7 @@
 char *_getenv(char *var)
 {
 	int i = 0;
-	char *tmp, **env = environ, *env_one;
+	char *tmp, **env = environ, *env_one, *ret;
 
 	while (environ[i])
 	{
@@ -19,9 +19,13 @@ char *_getenv(char *var)
 		if (_strcmp(tmp, var) == 0)
 		{
 			tmp = _strtok(NULL, "\0");
-			return (tmp);
+			ret = _calloc(strlen(tmp) + 1);
+			_strcpy(ret, tmp, _strlen(tmp));
+			free(env_one);
+			return (ret);
 		}
 		i++;
+		free(env_one);
 	}
 	return (NULL);
 }

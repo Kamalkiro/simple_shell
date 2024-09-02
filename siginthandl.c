@@ -16,6 +16,7 @@ void singinthandl(int s)
 		_puts("\n");
 		_puts(dir);
 		_puts("$ ");
+		free(dir);
 		fflush(stdout);
 	}
 }

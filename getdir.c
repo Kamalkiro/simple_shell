@@ -14,5 +14,6 @@ int getdir(char **arguments __attribute__((unused)))
 	getcwd(dir, size);
 	_puts(dir);
 	_puts("\n");
+	free(dir);
 	return (1);
 }

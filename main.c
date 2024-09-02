@@ -11,15 +11,17 @@
 int main(int ac, char **av)
 {
 	unsigned int dirsize;
-	char *line = NULL, *dir, *vari, **commands = NULL;
-	int pid = 0, count, i = 0, status, e, ec = 0, characters;
+	char *line = NULL, *dir, *vari, **commands = NULL, *hold;
+	int pid = 0, count, i = 0, status, e, ec = 0, characters, y = 0;
 	int check, linesize, ppid = 0, x = 0, fd, stepout = 0, flag = 0;
 
 	(void) ac;
+	replace_environ();
 	dirsize = MAXSIZE;
 	ppid = getpid();
 	vari = itoa(ppid);
 	_setenv("$", vari, 1);
+	free(vari);
 	if (av[1])
 	{
 		fd = open(av[1], O_RDONLY);
@@ -28,19 +30,21 @@ int main(int ac, char **av)
 		if (check)
 			commands = handlechain(line);
 		stepout++;
+		free(line);
 		line = NULL;
+		close(fd);
 	}
 	while (1)
 	{
 		if (stepout && !commands)
 			break;
-parent:
 		if (isatty(0) && !commands)
 		{
 			dir = _calloc(sizeof(char *) * MAXSIZE);
 			getcwd(dir, dirsize);
 			_puts(dir);
 			_puts("$ ");
+			free(dir);
 		}
 		signal(SIGINT, singinthandl);
 		if (!commands)
@@ -66,6 +70,7 @@ parent:
 			if (!commands[x])
 			{
 				x = 0;
+				freedouble(commands);
 				free(commands);
 				commands = NULL;
 			}
@@ -82,7 +87,10 @@ parent:
 		spacemv(line);
 		if (_strchr(line, '$') > 0)
 		{
+			hold = line;
 			line = convertvar(line);
+			if (hold != line)
+				y++;
 		}
 		count = argcount(line);
 		check = checkifcommandexists(line);
@@ -92,12 +100,12 @@ parent:
 			if (!isatty(0))
 			{
 				_perror(av[0], av[1] ? av[1] : "Not found");
-				goto parent;
+				continue;
 			}
 			else
 			{
 				_perror("at hsh", "command doesn't exist");
-				goto parent;
+				continue;
 			}
 		}
 		else
@@ -116,6 +124,7 @@ parent:
 				e = (status >> 8) & 0xFF;
 				vari = itoa(e);
 				_setenv("?", vari, 1);
+				free(vari);
 				if (e == 110)
 					deletvaratparent(line);
 				if (e == 111)
@@ -127,11 +136,18 @@ parent:
 				if (e == 114)
 				{
 					ec = getexitcode(line);
+					line = NULL;
 					break;
 				}
 			}
 		}
+		if (y > 0)
+		{
+			y = 0;
+			free(line);
+		}
 	}
-	freedouble(to_free);
+	freedouble(environ);
+	free(environ);
 	exit(ec ? ec : 0);
 }

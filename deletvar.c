@@ -7,7 +7,7 @@
 */
 int deletvar(char **arguments)
 {
-	char *envar = _calloc(MAXSIZE);
+	char *envar = NULL;
 	int i = 0, j = 1, len;
 
 	while (arguments[j])
@@ -15,13 +15,15 @@ int deletvar(char **arguments)
 		len = _strlen(arguments[j]);
 		while (environ[i])
 		{
+			envar = _calloc(MAXSIZE);
 			_strcpy(envar, environ[i], len);
 			if (_strcmp(envar, arguments[j]) == 0)
 			{
-				environ[i] = arguments[j];
+				free(envar);
 				return (110);
 			}
 			i++;
+			free(envar);
 		}
 		j++;
 	}

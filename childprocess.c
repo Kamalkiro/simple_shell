@@ -23,8 +23,8 @@ int childprocess(char *command, int count)
 	narg = _strtok(command, " \t");
 	while (*narg)
 	{
-		args[i] = _calloc(120);
-		args[i] = narg;
+		args[i] = _calloc(_strlen(narg) + 1);
+		_strcpy(args[i], narg, _strlen(narg) + 1);
 		narg = _strtok(NULL, " \t");
 		i++;
 	}
@@ -33,10 +33,14 @@ int childprocess(char *command, int count)
 	if (flag == 1)
 	{
 		dflag = checkals(args[0]);
+		free(args[0]);
 		args[0] = dflag;
 		dflag = checkals(args[0]);
 		if (dflag)
+		{
+			free(args[0]);
 			args[0] = dflag;
+		}
 	}
 	args[0] = _strtok(args[0], " \'");
 	if (_strchr(args[0], ' ') != 0)
@@ -54,7 +58,9 @@ int childprocess(char *command, int count)
 	j = fp(args);
 	if (j == 2)
 	{
-		args[0] = prepareforexec(args[0]);
+		dflag = prepareforexec(args[0]);
+		if (dflag != args[0])
+			args[0] = dflag;
 		if (args[0] == NULL)
 			perror("command doesn't exist");
 		if (execve(args[0], args, environ) == -1)
@@ -63,6 +69,9 @@ int childprocess(char *command, int count)
 			perror("at execve");
 		}
 	}
+	freedouble(args);
 	free(args);
+	freedouble(environ);
+	free(environ);
 	return (j);
 }

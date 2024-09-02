@@ -8,22 +8,18 @@
 char *convertvar(char *line)
 {
 	int i = 0, j = 0, x;
-	char *name = NULL, *cont = NULL;
+	char *name = NULL, *cont = NULL, *hold;
 	char *modif = NULL, *value = NULL;
 
 	while (line[i] != '$')
 		i++;
 	x = i;
-	i++;
 	name = _calloc(_strlen(line) - i);
-	while (line[i] != ' ' && line[i])
-	{
+	for (i++; line[i] != ' ' && line[i]; i++, j++)
 		name[j] = line[i];
-		i++;
-		j++;
-	}
 	name[j] = '\0';
 	value = _getenv(name);
+	free(name);
 	if (!value)
 		return (line);
 	j = 0;
@@ -46,16 +42,21 @@ char *convertvar(char *line)
 		line[x] = '\0';
 		x++;
 	}
-	modif = _calloc(_strlen(line) + _strlen(value) + _strlen(cont) + 1);
 	if (*line)
-	{
-		modif = _strcpy(modif, line, _strlen(line));
-		modif = _strconcat(modif, value, _strlen(value));
-	}
+		modif = _strconcat(line, value, _strlen(value));
 	else
+	{
+		modif = _calloc(_strlen(value) + 1);
 		modif = _strcpy(modif, value, _strlen(value));
+	}
 	if (cont)
+	{
+		hold = modif;
 		modif = _strconcat(modif, cont, _strlen(cont));
+		free(hold);
+		free(cont);
+	}
 	line = modif;
+	free(value);
 	return (line);
 }

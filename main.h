@@ -50,11 +50,10 @@ void spacesback(char **args);
 char *_calloc(int size);
 int handleor(char *line);
 void singinthandl(int s);
+char *my_calloc(int size);
 
 extern char **environ;
 extern char *str_ptr;
-extern char *to_free[MAXSIZE * 80];
-extern int to;
 
 int changedirectory(char **arguments);
 int goout(char **arguments);
@@ -73,4 +72,7 @@ void addquotes(char *arg);
 char *itoa(int num);
 char *convertvar(char *line);
 char **handlechain(char *line);
+int my_env(char **arguments);
+void replace_environ();
+
 #endif

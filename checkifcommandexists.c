@@ -17,6 +17,7 @@ int checkifcommandexists(char *line)
 		{"unset", deletvar},
 		{"alias", setals},
 		{"unalias", deletals},
+		{"env", my_env},
 		{NULL, notbuilt},
 	};
 
@@ -30,16 +31,19 @@ int checkifcommandexists(char *line)
 	}
 	command[j] = '\0';
 	cmd = _calloc(_strlen(command) + 1);
-
 	_strcpy(cmd, command, _strlen(command));
-	cmd[_strlen(command)] = '\0';
+	free(command);
 	check = checkals(cmd);
 	if (check)
 	{
+		free(cmd);
 		cmd = check;
 		check = checkals(cmd);
 		if (check)
+		{
+			free(cmd);
 			cmd = check;
+		}
 		ret = 1;
 	}
 	cmd = _strtok(cmd, " \'");
@@ -48,7 +52,10 @@ int checkifcommandexists(char *line)
 	{
 		j = _strcmp(cmd, builtins[i].choix);
 		if (j == 0)
+		{
+			free(cmd);
 			return (ret + 1);
+		}
 		i++;
 	}
 	checkexec = prepareforexec(cmd);
@@ -56,5 +63,10 @@ int checkifcommandexists(char *line)
 		ret += 1;
 	else
 		ret = 0;
+	if (checkexec != cmd)
+	{
+		free(checkexec);
+	}
+	free(cmd);
 	return (ret);
 }

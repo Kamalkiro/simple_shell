@@ -9,25 +9,31 @@
 char *prepareforexec(char *command)
 {
 	char *pathenv = _getenv("PATH");
-	char *paths = _calloc(MAXSIZE * 8), *ppath, *tmp;
-	int i = 0;
+	char *paths = _calloc(MAXSIZE * 8), *ppath, *tmp, *hold;
 
+	if(!pathenv)
+		return(NULL);
 	_strcpy(paths, pathenv, MAXSIZE * 8);
+	free(pathenv);
 	ppath = _strtok(paths, ":");
-	tmp = _calloc(120);
 	if (access(command, F_OK) == 0)
+	{
+		free(paths);
 		return (command);
+	}
 	while (*ppath)
 	{
 		tmp = _strconcat(ppath, "/", 1);
-		tmp = _strconcat(tmp, command, 30);
-		tmp = _strconcat(tmp, "\0", 1);
-		if (access(tmp, F_OK) == 0)
+		hold = _strconcat(tmp, command, 30);
+		free(tmp);
+		if (access(hold, F_OK) == 0)
 		{
-			return (tmp);
+			free(paths);
+			return (hold);
 		}
-		i--;
+		free(hold);
 		ppath = (_strtok(NULL, ":"));
 	}
+	free(paths);
 	return (NULL);
 }

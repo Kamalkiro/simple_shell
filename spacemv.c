@@ -9,30 +9,23 @@ void spacemv(char *str)
 {
 	int y = _strlen(str) - 1, i = 0, x = 1, flag = 0;
 
-	while (y > 0)
+	for ( ; y > 0; y--)
 	{
 		if (str[y] == ' ' || str[y] == '\n' || str[y] == '\t')
 			str[y] = '\0';
 		else
 			break;
-		y--;
 	}
-	while (str[i])
+	for (i = 0; str[i]; i++)
 	{
 		if (str[i] == '#' && (str[i - 1] == ' ' || str[i - 1] == '\0'))
 		{
-			while (str[i])
-			{
+			for ( ; str[i]; i++, y--)
 				str[i] = '\0';
-				i++;
-				y--;
-			}
 			y++;
 		}
-		i++;
 	}
-	i = 0;
-	while (str[i])
+	for (i = 0; str[i]; i++)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
@@ -50,7 +43,6 @@ void spacemv(char *str)
 				i++;
 			}
 		}
-		i++;
 	}
 	if (flag > 0)
 		str[y + 1 - x] = '\0';

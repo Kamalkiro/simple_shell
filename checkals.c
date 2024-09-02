@@ -8,8 +8,8 @@
 
 char *checkals(char *als)
 {
-	int fd = open(".aliases", O_RDONLY), i = 0;
-	char *line = _calloc(MAXSIZE), *each, *alx = _calloc(sizeof(als));
+	int fd = open(".aliases", O_RDONLY);
+	char *line = _calloc(MAXSIZE), *each, *alx = _calloc(sizeof(als)), *ret;
 
 	_strcpy(alx, als, MAXSIZE);
 	read(fd, line, MAXSIZE);
@@ -19,12 +19,17 @@ char *checkals(char *als)
 	{
 		if (_strcmp(each, alx) == 0)
 		{
-			i++;
+			free(alx);
+			ret = _calloc(_strlen(each) + 1);
 			each = _strtok(NULL, "\'\n");
-			return (each);
+			_strcpy(ret, each, _strlen(each));
+			free(line);
+			return (ret);
 		}
 		each = _strtok(NULL, "\n");
 		each = _strtok(NULL, "=");
 	}
+	free(alx);
+	free(line);
 	return (NULL);
 }

@@ -7,7 +7,7 @@
 */
 int getexitcode(char *line)
 {
-	int i = 0, j = 0, ret = 0;
+	int i = 0, j = 0, ret = 0, flag = 1;
 	char *code = _calloc(sizeof(char) * _strlen(line));
 
 	while (line[i] == ' ' || line[i] == '\t')
@@ -16,6 +16,11 @@ int getexitcode(char *line)
 		i++;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
+	if (line[i] == '-')
+	{
+		flag = -1;
+		i++;
+	}
 	if (line[i] != ' ' && line[i] != '\t' && line[i])
 	{
 		while (line[i] != ' ' && line[i] != '\t' && line[i])
@@ -32,5 +37,6 @@ int getexitcode(char *line)
 		ret = (ret * 10) + (code[i] - 48);
 		i++;
 	}
-	return (ret);
+	free(code);
+	return (ret * flag);
 }

@@ -24,7 +24,8 @@ int changedirectory(char **arguments)
 	}
 	if (dir == lami)
 	{
-		char *parent = NULL;
+		free(parent);
+		parent = NULL;
 
 		parent = getcwd(parent, MAXSIZE);
 		dir = goback(parent);
@@ -33,8 +34,13 @@ int changedirectory(char **arguments)
 	if (chdir(dir) == -1)
 	{
 		perror("cd");
+		free(oldpwd);
+		free(home);
+		free(parent);
 		return (3);
 	}
+	free(oldpwd);
+	free(home);
 	free(parent);
 	return (113);
 }

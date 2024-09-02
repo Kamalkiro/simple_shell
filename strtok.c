@@ -8,61 +8,44 @@
 */
 char *_strtok(char *line, char *delim)
 {
-	int i = 0, j, skip = 0, sskip = 0;
+	int i = 0, j, skip = 0, sskip = 0, x = 0, y = 0;
 	char *ret;
 	static char *str_ptr;
 
 	if (line == NULL)
 		line = str_ptr;
-
 	str_ptr = line;
 	while (line[i])
 	{
-		j = 0;
-		while (delim[j])
+		for (j = 0; delim[j]; j++)
 		{
 			if (line[i] == delim[j])
-			{
 				skip++;
-			}
-			j++;
 		}
 		if (skip == sskip)
 			break;
 		i++;
 		sskip = skip;
 	}
-	i = 0;
-	while (i < skip)
-	{
-		line++;
+	for ( ; x < skip; line++, x++)
 		str_ptr++;
-		i++;
-	}
-	i = 0;
-	while (line[i])
+	while (line[y])
 	{
-		j = 0;
-		while (delim[j])
+		for (j = 0; delim[j]; j++)
 		{
-			if (line[i] == delim[j])
+			if (line[y] == delim[j])
 			{
 				sskip = 113;
-				line[i] = '\0';
+				line[y] = '\0';
 				break;
 			}
-			j++;
 		}
-		i++;
+		y++;
 		if (sskip == 113)
 			break;
 	}
 	ret = line;
-	skip = 0;
-	while (skip < i)
-	{
+	for (skip = 0; skip < y; skip++)
 		str_ptr++;
-		skip++;
-	}
 	return (ret);
 }

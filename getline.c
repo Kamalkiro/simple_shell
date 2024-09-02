@@ -9,7 +9,7 @@
 */
 int _getline(char **buffer, int *buffersize, int fd)
 {
-	char *line = _calloc(MAXSIZE);
+	char line[MAXSIZE];
 	ssize_t size = read(fd, line, MAXSIZE);
 
 	if (size == 0)

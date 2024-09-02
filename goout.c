@@ -19,19 +19,15 @@ int goout(char **arguments)
 		}
 		if ((arguments[1][i] > 57 || arguments[1][i] < 48) && arguments[1][i])
 		{
-			perror("non valid exit code");
+			if (arguments[1][i] != '-')
+				perror("non valid exit code");
+			else
+				return (114);
 		}
 		else
 		{
-			if (ret > 255)
-			{
-				perror("non valid exit code");
-			}
-			else
-			{
-				_setenv("EXITCODE", arguments[1], 1);
-				return (114);
-			}
+			_setenv("EXITCODE", arguments[1], 1);
+			return (114);
 		}
 	}
 	else

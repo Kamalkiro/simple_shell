@@ -29,9 +29,13 @@ void deletvaratparent(char *line)
 			if (_strcmp(envar, vars[j]) == 0)
 			{
 				if (environ[i + 1] == NULL)
+				{
+					free(environ[i]);
 					environ[i] = NULL;
+				}
 				else
 				{
+					free(environ[i]);
 					while (environ[i])
 					{
 						environ[i] = environ[i + 1];

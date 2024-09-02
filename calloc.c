@@ -1,7 +1,5 @@
 #include "main.h"
 
-int to = 0;
-char *to_free[MAXSIZE * 80];
 /**
  * _calloc - allocates and initalizes memory with /0 for a variable
  * @size: of memory to be allocated
@@ -18,6 +16,5 @@ char *_calloc(int size)
 		ptr[i] = '\0';
 		i++;
 	}
-	to_free[to++] = ptr;
 	return (ptr);
 }

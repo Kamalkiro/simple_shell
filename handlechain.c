@@ -40,6 +40,7 @@ char **handlechain(char *line)
 		command[i] = '\0';
 		commands[a] = _calloc(_strlen(command + 1));
 		_strcpy(commands[a], command, MAXSIZE);
+		free(command);
 		a++;
 		if (line[j])
 			j++;
