@@ -9,11 +9,11 @@
 char *checkals(char *als)
 {
 	int fd = open(".aliases", O_RDONLY);
-	char *line = _calloc(MAXSIZE), *each, *alx = _calloc(sizeof(als)), *ret;
+	char *line = _calloc(MAXSIZE), *each, *alx = _calloc(_strlen(als) + 1), *ret;
 
-	_strcpy(alx, als, MAXSIZE);
 	read(fd, line, MAXSIZE);
 	close(fd);
+	_strcpy(alx, als, MAXSIZE);
 	each = _strtok(line, "=");
 	while (*each)
 	{

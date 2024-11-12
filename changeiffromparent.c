@@ -8,7 +8,7 @@ void changeiffromparent(char *line)
 {
 	char *dir = _calloc(sizeof(char) * _strlen(line)), *tmp = dir;
 	char *home = _getenv("HOME");
-	int i = 0, j = 0;
+	int i = 0, j = 0, flag = 0;
 	char *oldpwd = _getenv("OLDPWD");
 	char arr[] = "-";
 	char lami[] = "..";
@@ -27,9 +27,23 @@ void changeiffromparent(char *line)
 		{
 			while (line[i] != ' ' && line[i] != '\t' && line[i])
 			{
+				if (line[i] == '\"' || line[i] == '\'')
+				{
+					flag++;
+					i++;
+				}
+				if (line[i + 1] == ' ' && flag % 2 == 1)
+					line[i + 1] = ',';
 				dir[j] = line[i];
 				i++;
 				j++;
+			}
+			i = 0;
+			while (dir[i])
+			{
+				if (dir[i] == ',')
+					dir[i] = ' ';
+				i++;
 			}
 			dir[j] = '\0';
 		}

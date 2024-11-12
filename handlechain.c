@@ -30,7 +30,7 @@ char **handlechain(char *line)
 	while (line[j])
 	{
 		i = 0;
-		command = _calloc(_strlen(line));
+		command = _calloc(_strlen(line) + 1);
 		while (line[j] != ';' && line[j])
 		{
 			command[i] = line[j];

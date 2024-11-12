@@ -19,7 +19,7 @@ int childprocess(char *command, int count)
 		count -= 1000;
 		flag++;
 	}
-	args = malloc(sizeof(char *) * count);
+	args = malloc(sizeof(char *) * (count + 1));
 	narg = _strtok(command, " \t");
 	while (*narg)
 	{
@@ -42,7 +42,7 @@ int childprocess(char *command, int count)
 			args[0] = dflag;
 		}
 	}
-	args[0] = _strtok(args[0], " \'");
+	args[0] = _strtok(args[0], "\'");
 	if (_strchr(args[0], ' ') != 0)
 	{
 		args[i + 1] = NULL;

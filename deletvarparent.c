@@ -6,7 +6,7 @@
 */
 void deletvaratparent(char *line)
 {
-	char *var = _calloc(MAXSIZE), *envar, *cline = _calloc(MAXSIZE);
+	char *var = NULL, *envar, *cline = _calloc(MAXSIZE);
 	char **vars = malloc(MAXSIZE * sizeof(char *));
 	int i = 0, len, j = 1, x = 0;
 
@@ -42,12 +42,15 @@ void deletvaratparent(char *line)
 						i++;
 					}
 				}
+				free(envar);
 				break;
 			}
 			i++;
+			free(envar);
 		}
 		i = 0;
 		j++;
 	}
+	free(cline);
 	free(vars);
 }

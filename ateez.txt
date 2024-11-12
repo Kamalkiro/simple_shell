@@ -1,0 +1,7 @@
+/bin/ls
+cd ..
+echo $SHELL
+alias
+setenv kamal baraw
+echo $kamal
+unset kamal

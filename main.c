@@ -11,11 +11,12 @@
 int main(int ac, char **av)
 {
 	unsigned int dirsize;
-	char *line = NULL, *dir, *vari, **commands = NULL, *hold;
-	int pid = 0, count, i = 0, status, e, ec = 0, characters, y = 0;
+	char *line = NULL, *dir, *vari, **commands = NULL, *hold, *fixx;
+	int pid = 0, count, i = 0, status, e, ec = 0, characters, y = 0, xx = 0;
 	int check, linesize, ppid = 0, x = 0, fd, stepout = 0, flag = 0;
 
 	(void) ac;
+	replace_environ();
 	dirsize = MAXSIZE;
 	ppid = getpid();
 	vari = itoa(ppid);
@@ -65,6 +66,7 @@ int main(int ac, char **av)
 				line = _calloc(_strlen(commands[x]) + 1);
 				_strcpy(line, commands[x], MAXSIZE);
 				x++;
+				y++;
 			}
 			if (!commands[x])
 			{
@@ -79,8 +81,16 @@ int main(int ac, char **av)
 			flag = handleor(line);
 			if ((e == 3 && flag == 1) || (flag == 2 && e != 3))
 			{
+				if (flag == 2)
+					e = 3;
+				if (y > 0)
+				{
+					free(line);
+				}
 				continue;
 			}
+			fixx = line;
+			xx++;
 			line = _strtok(line, "|&");
 		}
 		spacemv(line);
@@ -89,7 +99,16 @@ int main(int ac, char **av)
 			hold = line;
 			line = convertvar(line);
 			if (hold != line)
+			{
+				if (x > 0 && xx == 0)
+					free(hold);
+				if (xx > 0)
+				{
+					free(fixx);
+					xx = 0;
+				}
 				y++;
+			}
 		}
 		count = argcount(line);
 		check = checkifcommandexists(line);
@@ -143,8 +162,16 @@ int main(int ac, char **av)
 		if (y > 0)
 		{
 			y = 0;
-			free(line);
+			if (xx > 0)
+			{
+				free(fixx);
+				xx = 0;
+			}
+			else
+				free(line);
 		}
 	}
+	freedouble(environ);
+	free(environ);
 	exit(ec ? ec : 0);
 }
